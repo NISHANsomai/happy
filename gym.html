@@ -1,0 +1,1461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>IRONFORGE — Modern Gym</title>
+
+<style>
+:root{
+    --bg:#070707;
+    --card:#111;
+    --card2:#151515;
+    --text:#f5f5f5;
+    --muted:#999;
+    --accent:#d9ff3f;
+    --border:#292929;
+    --max:1180px;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.5;
+}
+
+a{
+    color:inherit;
+    text-decoration:none;
+}
+
+button{
+    font:inherit;
+    cursor:pointer;
+}
+
+/* ================= NAVBAR ================= */
+
+.nav{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    z-index:100;
+    background:rgba(7,7,7,.75);
+    backdrop-filter:blur(18px);
+    border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.nav-inner{
+    width:min(92%,var(--max));
+    height:76px;
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    font-size:20px;
+    font-weight:900;
+    letter-spacing:3px;
+}
+
+.logo span{
+    color:var(--accent);
+}
+
+.links{
+    display:flex;
+    gap:30px;
+    color:#ccc;
+    font-size:14px;
+}
+
+.links a{
+    transition:.2s;
+}
+
+.links a:hover{
+    color:var(--accent);
+}
+
+.btn{
+    border:0;
+    border-radius:9px;
+    padding:13px 20px;
+    background:var(--accent);
+    color:#050505;
+    font-weight:800;
+    transition:.25s;
+}
+
+.btn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 12px 30px rgba(217,255,63,.2);
+}
+
+.btn.dark{
+    background:#181818;
+    color:#fff;
+    border:1px solid #333;
+}
+
+.menu{
+    display:none;
+    background:none;
+    border:0;
+    color:white;
+    font-size:25px;
+}
+
+/* ================= HERO ================= */
+
+.hero{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    position:relative;
+    overflow:hidden;
+    padding:130px 0 80px;
+}
+
+.hero::before{
+    content:"";
+    position:absolute;
+    width:650px;
+    height:650px;
+    right:-180px;
+    top:100px;
+    border-radius:50%;
+    background:radial-gradient(
+        circle,
+        rgba(217,255,63,.2),
+        transparent 70%
+    );
+}
+
+.grid{
+    position:absolute;
+    inset:0;
+    background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+    background-size:70px 70px;
+}
+
+.container{
+    width:min(92%,var(--max));
+    margin:auto;
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+    max-width:820px;
+}
+
+.badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    border:1px solid #333;
+    background:#111;
+    border-radius:100px;
+    padding:8px 14px;
+    color:#aaa;
+    font-size:12px;
+    margin-bottom:25px;
+}
+
+.badge i{
+    width:7px;
+    height:7px;
+    background:var(--accent);
+    border-radius:50%;
+    box-shadow:0 0 12px var(--accent);
+}
+
+h1{
+    font-size:clamp(55px,9vw,115px);
+    line-height:.88;
+    letter-spacing:-7px;
+    text-transform:uppercase;
+}
+
+h1 span{
+    color:var(--accent);
+}
+
+.hero p{
+    max-width:620px;
+    color:var(--muted);
+    font-size:17px;
+    margin:28px 0;
+}
+
+.actions{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    max-width:620px;
+    margin-top:55px;
+    border-top:1px solid var(--border);
+    padding-top:20px;
+}
+
+.stat strong{
+    font-size:27px;
+}
+
+.stat small{
+    display:block;
+    color:var(--muted);
+}
+
+/* ================= SECTIONS ================= */
+
+section{
+    padding:100px 0;
+}
+
+.section-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:end;
+    gap:30px;
+    margin-bottom:35px;
+}
+
+.kicker{
+    color:var(--accent);
+    font-size:12px;
+    font-weight:900;
+    letter-spacing:2px;
+    text-transform:uppercase;
+}
+
+h2{
+    font-size:clamp(38px,5vw,65px);
+    line-height:.98;
+    letter-spacing:-3px;
+    margin-top:8px;
+}
+
+.section-head p{
+    max-width:450px;
+    color:var(--muted);
+}
+
+/* ================= PROGRAMS ================= */
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:16px;
+}
+
+.card{
+    background:linear-gradient(145deg,#141414,#0c0c0c);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:28px;
+    transition:.3s;
+    position:relative;
+    overflow:hidden;
+}
+
+.card:hover{
+    transform:translateY(-7px);
+    border-color:#444;
+}
+
+.card::after{
+    content:"";
+    position:absolute;
+    width:150px;
+    height:150px;
+    right:-70px;
+    top:-70px;
+    border-radius:50%;
+    background:var(--accent);
+    opacity:.05;
+}
+
+.icon{
+    font-size:35px;
+    margin-bottom:40px;
+}
+
+.card h3{
+    font-size:21px;
+    margin-bottom:8px;
+}
+
+.card p{
+    color:var(--muted);
+    font-size:14px;
+}
+
+/* ================= PRICING ================= */
+
+.price-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:16px;
+}
+
+.price{
+    padding:30px;
+    border:1px solid var(--border);
+    border-radius:18px;
+    background:#0e0e0e;
+}
+
+.price.featured{
+    border-color:var(--accent);
+    box-shadow:0 0 50px rgba(217,255,63,.06);
+}
+
+.tag{
+    color:var(--accent);
+    font-size:11px;
+    font-weight:900;
+    letter-spacing:1px;
+}
+
+.price h3{
+    margin:10px 0;
+    font-size:22px;
+}
+
+.amount{
+    font-size:43px;
+    font-weight:900;
+}
+
+.amount span{
+    color:var(--muted);
+    font-size:14px;
+    font-weight:400;
+}
+
+.features{
+    list-style:none;
+    margin:25px 0;
+}
+
+.features li{
+    padding:9px 0;
+    border-bottom:1px solid #202020;
+    color:#ccc;
+    font-size:14px;
+}
+
+.features li::before{
+    content:"✓";
+    color:var(--accent);
+    margin-right:9px;
+}
+
+/* ================= TRAINERS ================= */
+
+.trainer-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:14px;
+}
+
+.trainer{
+    height:330px;
+    border-radius:18px;
+    background:
+        radial-gradient(
+            circle at 50% 25%,
+            #555,
+            transparent 32%
+        ),
+        linear-gradient(160deg,#252525,#0d0d0d);
+    border:1px solid var(--border);
+    padding:20px;
+    display:flex;
+    flex-direction:column;
+    justify-content:end;
+    position:relative;
+    overflow:hidden;
+}
+
+.trainer::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(
+        transparent 30%,
+        rgba(0,0,0,.9)
+    );
+}
+
+.trainer>*{
+    position:relative;
+    z-index:2;
+}
+
+.trainer span{
+    color:var(--accent);
+    font-size:11px;
+    font-weight:900;
+    text-transform:uppercase;
+}
+
+.trainer h3{
+    font-size:22px;
+}
+
+/* ================= SCHEDULE ================= */
+
+.schedule{
+    border:1px solid var(--border);
+    border-radius:18px;
+    overflow:hidden;
+}
+
+.row{
+    display:grid;
+    grid-template-columns:110px 1fr 150px 120px;
+    align-items:center;
+    gap:15px;
+    padding:18px 22px;
+    border-bottom:1px solid var(--border);
+}
+
+.row:last-child{
+    border-bottom:0;
+}
+
+.row.head{
+    background:#111;
+    color:#777;
+    font-size:11px;
+    text-transform:uppercase;
+}
+
+.pill{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:7px;
+    background:#191919;
+    color:#ccc;
+    font-size:11px;
+}
+
+.live{
+    color:var(--accent);
+}
+
+/* ================= CTA ================= */
+
+.cta{
+    border:1px solid #333;
+    border-radius:24px;
+    padding:60px;
+    background:linear-gradient(120deg,#151515,#0b0b0b);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:30px;
+    overflow:hidden;
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+    padding:40px 0;
+    border-top:1px solid var(--border);
+    color:#777;
+    font-size:13px;
+}
+
+.foot{
+    display:flex;
+    justify-content:space-between;
+}
+
+/* ================= MODAL ================= */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.82);
+    backdrop-filter:blur(8px);
+    display:none;
+    place-items:center;
+    z-index:200;
+    padding:20px;
+}
+
+.modal.open{
+    display:grid;
+}
+
+.modal-box{
+    width:min(500px,100%);
+    background:#121212;
+    border:1px solid #333;
+    border-radius:20px;
+    padding:30px;
+}
+
+.close{
+    float:right;
+    background:none;
+    border:0;
+    color:#aaa;
+    font-size:28px;
+}
+
+input,
+select{
+    width:100%;
+    padding:14px;
+    margin:8px 0 14px;
+    background:#090909;
+    border:1px solid #333;
+    border-radius:9px;
+    color:white;
+}
+
+.toast{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    background:var(--accent);
+    color:#050505;
+    padding:14px 18px;
+    border-radius:10px;
+    font-weight:800;
+    transform:translateY(100px);
+    opacity:0;
+    transition:.3s;
+    z-index:300;
+}
+
+.toast.show{
+    transform:translateY(0);
+    opacity:1;
+}
+
+/* ================= ANIMATION ================= */
+
+.reveal{
+    opacity:0;
+    transform:translateY(25px);
+    transition:.7s;
+}
+
+.reveal.visible{
+    opacity:1;
+    transform:none;
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:800px){
+
+    .links{
+        display:none;
+    }
+
+    .nav .btn{
+        display:none;
+    }
+
+    .menu{
+        display:block;
+    }
+
+    .cards,
+    .price-grid{
+        grid-template-columns:1fr;
+    }
+
+    .trainer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .section-head,
+    .cta{
+        display:block;
+    }
+
+    .section-head p{
+        margin-top:18px;
+    }
+
+    .row{
+        grid-template-columns:75px 1fr;
+    }
+
+    .row > *:nth-child(n+3){
+        display:none;
+    }
+}
+
+@media(max-width:500px){
+
+    h1{
+        letter-spacing:-4px;
+    }
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .stats .stat:last-child{
+        display:none;
+    }
+
+    .trainer-grid{
+        grid-template-columns:1fr;
+    }
+
+    .cta{
+        padding:35px 25px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="nav">
+
+<div class="nav-inner">
+
+<a href="#" class="logo">
+IRON<span>FORGE</span>
+</a>
+
+<div class="links">
+<a href="#programs">Programs</a>
+<a href="#plans">Membership</a>
+<a href="#trainers">Trainers</a>
+<a href="#schedule">Schedule</a>
+</div>
+
+<button class="btn" onclick="openModal()">
+Join Now
+</button>
+
+<button class="menu" onclick="toggleMenu()">
+☰
+</button>
+
+</div>
+
+</nav>
+
+
+<!-- ================= HERO ================= -->
+
+<header class="hero">
+
+<div class="grid"></div>
+
+<div class="container hero-content reveal">
+
+<div class="badge">
+<i></i>
+YOUR STRONGEST VERSION STARTS HERE
+</div>
+
+<h1>
+BUILD.<br>
+<span>MOVE.</span><br>
+CONQUER.
+</h1>
+
+<p>
+A premium training experience built around strength,
+performance and real progress. Train smarter with expert
+coaches, modern equipment and a community that pushes
+you forward.
+</p>
+
+<div class="actions">
+
+<a href="#plans" class="btn">
+Explore Memberships →
+</a>
+
+<a href="#programs" class="btn dark">
+View Programs
+</a>
+
+</div>
+
+<div class="stats">
+
+<div class="stat">
+<strong>24/7</strong>
+<small>Gym Access</small>
+</div>
+
+<div class="stat">
+<strong>18+</strong>
+<small>Expert Coaches</small>
+</div>
+
+<div class="stat">
+<strong>4.9/5</strong>
+<small>Member Rating</small>
+</div>
+
+</div>
+
+</div>
+
+</header>
+
+
+<!-- ================= PROGRAMS ================= -->
+
+<section id="programs">
+
+<div class="container reveal">
+
+<div class="section-head">
+
+<div>
+
+<div class="kicker">
+Training Systems
+</div>
+
+<h2>
+Train with purpose.
+</h2>
+
+</div>
+
+<p>
+Whether you're starting from zero or chasing your next
+personal best, choose a program designed around your goal.
+</p>
+
+</div>
+
+
+<div class="cards">
+
+<div class="card">
+
+<div class="icon">⚡</div>
+
+<h3>
+Strength Lab
+</h3>
+
+<p>
+Progressive strength training with structured programming
+and expert coaching.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<div class="icon">◈</div>
+
+<h3>
+Performance
+</h3>
+
+<p>
+Athletic conditioning, speed, power and mobility for
+peak performance.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<div class="icon">↗</div>
+
+<h3>
+Transformation
+</h3>
+
+<p>
+Personalized training and sustainable habits built around
+your lifestyle.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= MEMBERSHIP ================= -->
+
+<section id="plans">
+
+<div class="container reveal">
+
+<div class="section-head">
+
+<div>
+
+<div class="kicker">
+Membership
+</div>
+
+<h2>
+Pick your level.
+</h2>
+
+</div>
+
+<p>
+Simple memberships with everything you need to train
+and keep progressing.
+</p>
+
+</div>
+
+
+<div class="price-grid">
+
+
+<div class="price">
+
+<div class="tag">
+STARTER
+</div>
+
+<h3>
+Essential
+</h3>
+
+<div class="amount">
+$29 <span>/ month</span>
+</div>
+
+<ul class="features">
+
+<li>24/7 gym access</li>
+<li>Full equipment access</li>
+<li>Fitness assessment</li>
+
+</ul>
+
+<button
+class="btn dark"
+onclick="selectPlan('Essential')">
+
+Choose Plan
+
+</button>
+
+</div>
+
+
+
+<div class="price featured">
+
+<div class="tag">
+MOST POPULAR
+</div>
+
+<h3>
+Performance
+</h3>
+
+<div class="amount">
+$49 <span>/ month</span>
+</div>
+
+<ul class="features">
+
+<li>Everything in Essential</li>
+<li>4 coached sessions / month</li>
+<li>Personal progress tracking</li>
+
+</ul>
+
+<button
+class="btn"
+onclick="selectPlan('Performance')">
+
+Choose Plan
+
+</button>
+
+</div>
+
+
+
+<div class="price">
+
+<div class="tag">
+ELITE
+</div>
+
+<h3>
+Unlimited
+</h3>
+
+<div class="amount">
+$89 <span>/ month</span>
+</div>
+
+<ul class="features">
+
+<li>Unlimited coached sessions</li>
+<li>Personalized program</li>
+<li>Nutrition guidance</li>
+
+</ul>
+
+<button
+class="btn dark"
+onclick="selectPlan('Unlimited')">
+
+Choose Plan
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= TRAINERS ================= -->
+
+<section id="trainers">
+
+<div class="container reveal">
+
+<div class="section-head">
+
+<div>
+
+<div class="kicker">
+The Team
+</div>
+
+<h2>
+Meet your coaches.
+</h2>
+
+</div>
+
+<p>
+Real coaching. Clear goals. No ego.
+</p>
+
+</div>
+
+
+<div class="trainer-grid">
+
+<div class="trainer">
+
+<span>
+Strength
+</span>
+
+<h3>
+Alex Carter
+</h3>
+
+</div>
+
+
+<div class="trainer">
+
+<span>
+Performance
+</span>
+
+<h3>
+Maya Brooks
+</h3>
+
+</div>
+
+
+<div class="trainer">
+
+<span>
+Mobility
+</span>
+
+<h3>
+Jordan Lee
+</h3>
+
+</div>
+
+
+<div class="trainer">
+
+<span>
+Conditioning
+</span>
+
+<h3>
+Sam Rivera
+</h3>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= SCHEDULE ================= -->
+
+<section id="schedule">
+
+<div class="container reveal">
+
+<div class="section-head">
+
+<div>
+
+<div class="kicker">
+This Week
+</div>
+
+<h2>
+Class schedule.
+</h2>
+
+</div>
+
+<p>
+Book your next session and keep your momentum going.
+</p>
+
+</div>
+
+
+<div class="schedule">
+
+
+<div class="row head">
+
+<div>Day</div>
+<div>Class</div>
+<div>Coach</div>
+<div>Status</div>
+
+</div>
+
+
+<div class="row">
+
+<strong>MON</strong>
+
+<div>
+Strength Lab
+<span class="pill">60 min</span>
+</div>
+
+<div>
+Alex Carter
+</div>
+
+<div class="live">
+Spots open
+</div>
+
+</div>
+
+
+<div class="row">
+
+<strong>TUE</strong>
+
+<div>
+HIIT Performance
+<span class="pill">45 min</span>
+</div>
+
+<div>
+Maya Brooks
+</div>
+
+<div class="live">
+Spots open
+</div>
+
+</div>
+
+
+<div class="row">
+
+<strong>WED</strong>
+
+<div>
+Mobility Flow
+<span class="pill">50 min</span>
+</div>
+
+<div>
+Jordan Lee
+</div>
+
+<div>
+3 spots
+</div>
+
+</div>
+
+
+<div class="row">
+
+<strong>THU</strong>
+
+<div>
+Power Session
+<span class="pill">60 min</span>
+</div>
+
+<div>
+Alex Carter
+</div>
+
+<div class="live">
+Spots open
+</div>
+
+</div>
+
+
+<div class="row">
+
+<strong>FRI</strong>
+
+<div>
+Conditioning
+<span class="pill">45 min</span>
+</div>
+
+<div>
+Sam Rivera
+</div>
+
+<div>
+5 spots
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= CTA ================= -->
+
+<section>
+
+<div class="container reveal">
+
+<div class="cta">
+
+<div>
+
+<div class="kicker">
+Free Trial
+</div>
+
+<h2>
+Ready to start?
+</h2>
+
+<p style="color:#999;margin-top:12px">
+Try the gym for 7 days. No pressure, just progress.
+</p>
+
+</div>
+
+<button class="btn" onclick="openModal()">
+Claim Free Trial →
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+<div class="container foot">
+
+<div>
+© 2026 IRONFORGE FITNESS
+</div>
+
+<div>
+Instagram · TikTok · YouTube
+</div>
+
+</div>
+
+</footer>
+
+
+<!-- ================= MODAL ================= -->
+
+<div class="modal" id="modal">
+
+<div class="modal-box">
+
+<button class="close" onclick="closeModal()">
+×
+</button>
+
+<div class="kicker">
+GET STARTED
+</div>
+
+<h2 style="font-size:38px">
+Claim your trial.
+</h2>
+
+<p style="color:#999;margin:10px 0 20px">
+Tell us where to send your welcome details.
+</p>
+
+
+<form onsubmit="submitForm(event)">
+
+<input
+required
+placeholder="Full name"
+>
+
+<input
+required
+type="email"
+placeholder="Email address"
+>
+
+
+<select id="plan">
+
+<option>
+7-Day Free Trial
+</option>
+
+<option>
+Essential Membership
+</option>
+
+<option>
+Performance Membership
+</option>
+
+<option>
+Unlimited Membership
+</option>
+
+</select>
+
+
+<button
+class="btn"
+style="width:100%"
+>
+
+Submit Request
+
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+
+<div class="toast" id="toast">
+Request received ✓
+</div>
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script>
+
+function openModal(){
+
+    document
+    .getElementById("modal")
+    .classList
+    .add("open");
+
+}
+
+
+function closeModal(){
+
+    document
+    .getElementById("modal")
+    .classList
+    .remove("open");
+
+}
+
+
+function selectPlan(plan){
+
+    document
+    .getElementById("plan")
+    .value = plan + " Membership";
+
+    openModal();
+
+}
+
+
+function submitForm(event){
+
+    event.preventDefault();
+
+    closeModal();
+
+    const toast =
+        document.getElementById("toast");
+
+    toast.classList.add("show");
+
+    setTimeout(function(){
+
+        toast.classList.remove("show");
+
+    },2800);
+
+}
+
+
+function toggleMenu(){
+
+    const links =
+        document.querySelector(".links");
+
+    if(links.style.display === "flex"){
+
+        links.style.display = "none";
+
+    }else{
+
+        links.style.display = "flex";
+        links.style.position = "absolute";
+        links.style.top = "76px";
+        links.style.left = "0";
+        links.style.right = "0";
+        links.style.padding = "25px";
+        links.style.background = "#0b0b0b";
+        links.style.flexDirection = "column";
+
+    }
+
+}
+
+
+/* Scroll reveal */
+
+const observer =
+new IntersectionObserver(
+
+    function(entries){
+
+        entries.forEach(function(entry){
+
+            if(entry.isIntersecting){
+
+                entry.target
+                .classList
+                .add("visible");
+
+            }
+
+        });
+
+    },
+
+    {
+        threshold:.12
+    }
+
+);
+
+
+document
+.querySelectorAll(".reveal")
+.forEach(function(element){
+
+    observer.observe(element);
+
+});
+
+
+/* Close modal by clicking outside */
+
+document
+.getElementById("modal")
+.addEventListener("click",function(event){
+
+    if(event.target.id === "modal"){
+
+        closeModal();
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>
